@@ -1,3 +1,9 @@
+import type {
+  Category,
+  Product,
+  Order,
+} from "@/types";
+
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -126,12 +132,6 @@ export async function getProduct(productId: number) {
 }
 
 
-import type {
-  Category,
-  Product,
-  Order
-} from "@/types";
-
 
 export interface CreateOrderItemPayload {
   product_id: number;
@@ -253,6 +253,68 @@ export async function updateAdminOrderStatus(
       body: JSON.stringify({
         status: orderStatus,
       }),
+    }
+  );
+}
+
+export interface ProductCreatePayload {
+  name: string;
+  description: string;
+  price: number;
+  category_id: number;
+  stock: number;
+  image_url: string | null;
+  is_available: boolean;
+}
+
+
+export interface ProductUpdatePayload {
+  name?: string;
+  description?: string;
+  price?: number;
+  category_id?: number;
+  stock?: number;
+  image_url?: string | null;
+  is_available?: boolean;
+}
+
+
+export async function createProduct(
+  payload: ProductCreatePayload
+) {
+  return apiRequest<Product>(
+    "/api/products",
+    {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }
+  );
+}
+
+
+export async function updateProduct(
+  productId: number,
+  payload: ProductUpdatePayload
+) {
+  return apiRequest<Product>(
+    `/api/products/${productId}`,
+    {
+      method: "PUT",
+      body: JSON.stringify(payload),
+    }
+  );
+}
+
+
+export async function deleteProduct(
+  productId: number
+) {
+  return apiRequest<{
+    message: string;
+  }>(
+    `/api/products/${productId}`,
+    {
+      method: "DELETE",
     }
   );
 }

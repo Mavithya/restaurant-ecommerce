@@ -273,10 +273,22 @@ export default function AdminPage() {
 
                     <button
                         type="button"
-                        onClick={() => router.push("/admin/products")}
-                        className="rounded-full border border-(--line) px-4 py-2 text-xs font-semibold"
+                        onClick={() =>
+                            router.push("/admin/products")
+                        }
+                        className="border border-(--line) bg-(--surface) p-6 text-left transition hover:-translate-y-0.5 hover:shadow-sm"
                     >
-                        Products
+                        <p className="text-lg font-semibold">
+                            Products & Inventory
+                        </p>
+
+                        <p className="mt-2 text-sm text-(--muted)">
+                            Add, edit, disable and manage restaurant stock.
+                        </p>
+
+                        <p className="mt-5 text-xs font-semibold uppercase tracking-[0.14em]">
+                            Manage →
+                        </p>
                     </button>
 
                     <button
