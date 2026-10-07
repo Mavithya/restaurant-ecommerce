@@ -188,3 +188,71 @@ export async function getWhatsAppOrderLink(
     `/api/orders/${orderId}/whatsapp`
   );
 }
+
+export interface AdminDashboardStats {
+  total_products: number;
+  active_products: number;
+  low_stock_products: number;
+  total_categories: number;
+  total_orders: number;
+  pending_orders: number;
+  paid_revenue: number | string;
+}
+
+export interface AdminOrderItem {
+  id: number;
+  product_id: number;
+  quantity: number;
+  unit_price: number | string;
+  subtotal: number | string;
+  product?: {
+    id: number;
+    name: string;
+  };
+}
+
+export interface AdminOrder {
+  id: number;
+  customer_name: string;
+  phone: string;
+  delivery_address: string;
+  total_amount: number | string;
+  payment_method: "PAYHERE" | "WHATSAPP";
+  payment_status: string;
+  order_status: string;
+  items: AdminOrderItem[];
+}
+
+
+export async function getAdminDashboardStats() {
+  return apiRequest<AdminDashboardStats>(
+    "/api/admin/dashboard"
+  );
+}
+
+
+export async function getAdminOrders() {
+  return apiRequest<AdminOrder[]>(
+    "/api/admin/orders"
+  );
+}
+
+
+export async function updateAdminOrderStatus(
+  orderId: number,
+  orderStatus: string
+) {
+  return apiRequest<{
+    message: string;
+    order_id: number;
+    order_status: string;
+  }>(
+    `/api/admin/orders/${orderId}/status`,
+    {
+      method: "PATCH",
+      body: JSON.stringify({
+        status: orderStatus,
+      }),
+    }
+  );
+}
