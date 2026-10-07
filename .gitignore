@@ -27,3 +27,8 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Sensitive / scratch files
+pass.txt
+*.txt
+notes.txt
