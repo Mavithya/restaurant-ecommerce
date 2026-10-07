@@ -337,21 +337,18 @@ export default function AdminPage() {
 
                     </div>
 
-
                     <div className="border border-(--line) bg-(--surface) p-6">
-
                         <p className="text-xs uppercase tracking-[0.18em] text-(--muted)">
                             Low Stock
                         </p>
 
                         <p className="mt-3 text-3xl font-semibold tracking-tight">
-                            {stats?.low_stock_products ?? 0}
+                            {stats?.low_stock_products?.length ?? 0}
                         </p>
 
                         <p className="mt-1 text-sm text-(--muted)">
                             Products with 5 or fewer units.
                         </p>
-
                     </div>
 
                 </section>
@@ -425,7 +422,7 @@ export default function AdminPage() {
 
                                         <tr
                                             key={order.id}
-                                            className="border-b border-(--line) last:border-b-0"
+                                            className="border-b border-(--line) last:border-none"
                                         >
 
                                             <td className="px-5 py-5 align-top">

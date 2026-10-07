@@ -192,11 +192,16 @@ export async function getWhatsAppOrderLink(
 export interface AdminDashboardStats {
   total_products: number;
   active_products: number;
-  low_stock_products: number;
+  low_stock_products: {
+    id: number;
+    name: string;
+    stock: number;
+  }[];
   total_categories: number;
   total_orders: number;
   pending_orders: number;
   paid_revenue: number | string;
+  
 }
 
 export interface AdminOrderItem {
@@ -396,6 +401,31 @@ export async function updateAdminOrderStatus(
       body: JSON.stringify({
         status: orderStatus,
       }),
+    }
+  );
+}
+
+export interface ImageUploadResponse {
+  secure_url: string;
+  public_id: string;
+}
+
+
+export async function uploadProductImage(
+  file: File
+) {
+  const formData = new FormData();
+
+  formData.append(
+    "file",
+    file
+  );
+
+  return apiRequest<ImageUploadResponse>(
+    "/api/admin/upload-image",
+    {
+      method: "POST",
+      body: formData,
     }
   );
 }
