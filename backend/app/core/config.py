@@ -12,6 +12,11 @@ class Settings(BaseSettings):
     PAYHERE_MERCHANT_SECRET: str
     PAYHERE_SANDBOX: bool = True
 
+    FRONTEND_URL: str = "http://localhost:3000"
+    BACKEND_URL: str = "http://localhost:8000"
+
+    WHATSAPP_NUMBER: str = ""
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

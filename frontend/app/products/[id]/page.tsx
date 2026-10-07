@@ -1,21 +1,17 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Check, Minus, Plus, ShoppingBag } from "lucide-react";
-
+import { useParams } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import { useCart } from "@/components/cart/CartContext";
 import { getProduct } from "@/lib/api";
 import type { Product } from "@/types";
 
-export default function ProductDetailPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const resolvedParams = use(params);
-  const productId = Number(resolvedParams.id);
+function ProductDetailContent() {
+  const params = useParams<{ id: string }>();
+  const productId = Number(params.id);
 
   const { addToCart } = useCart();
 
@@ -152,11 +148,10 @@ export default function ProductDetailPage({
                 {/* Stock info */}
                 <div className="mt-6 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.12em]">
                   <span
-                    className={`h-2 w-2 rounded-full ${
-                      product.is_available && product.stock > 0
+                    className={`h-2 w-2 rounded-full ${product.is_available && product.stock > 0
                         ? "bg-emerald-500"
                         : "bg-red-500"
-                    }`}
+                      }`}
                   />
                   {product.is_available && product.stock > 0
                     ? `In Stock (${product.stock} available)`
@@ -235,5 +230,34 @@ export default function ProductDetailPage({
         )}
       </main>
     </div>
+  );
+}
+
+function ProductDetailFallback() {
+  return (
+    <main className="min-h-screen bg-(--background) px-6 py-12">
+      <div className="mx-auto max-w-7xl">
+        <div className="h-8 w-32 animate-pulse rounded bg-gray-200" />
+
+        <div className="mt-10 grid gap-10 lg:grid-cols-2">
+          <div className="aspect-square animate-pulse rounded-2xl bg-gray-200" />
+
+          <div className="space-y-5">
+            <div className="h-10 w-3/4 animate-pulse rounded bg-gray-200" />
+            <div className="h-6 w-1/3 animate-pulse rounded bg-gray-200" />
+            <div className="h-24 w-full animate-pulse rounded bg-gray-200" />
+            <div className="h-12 w-40 animate-pulse rounded bg-gray-200" />
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+export default function ProductDetailPage() {
+  return (
+    <Suspense fallback={<ProductDetailFallback />}>
+      <ProductDetailContent />
+    </Suspense>
   );
 }

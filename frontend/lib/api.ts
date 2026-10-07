@@ -116,44 +116,27 @@ export async function createOrder(
 
 import type { PayHerePaymentResponse } from "./payhere";
 
-export interface PayHereCustomer {
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
-  address: string;
-  city: string;
-  country: string;
-}
 
 export async function createPayHerePayment(
-  orderId: number,
-  customer: PayHereCustomer
+  orderId: number
 ): Promise<PayHerePaymentResponse> {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-  if (!API_URL) {
-    throw new Error("NEXT_PUBLIC_API_URL is not configured");
-  }
-
-  const response = await fetch(
-    `${API_URL}/api/payments/payhere/create?order_id=${orderId}`,
+  return apiRequest<PayHerePaymentResponse>(
+    `/api/payments/payhere/create?order_id=${orderId}`,
     {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(customer),
     }
   );
+}
 
-  if (!response.ok) {
-    const error = await response.json().catch(() => null);
+export interface WhatsAppOrderResponse {
+  order_id: number;
+  whatsapp_url: string;
+}
 
-    throw new Error(
-      error?.detail || "Unable to initialize PayHere payment"
-    );
-  }
-
-  return response.json();
+export async function getWhatsAppOrderLink(
+  orderId: number
+): Promise<WhatsAppOrderResponse> {
+  return apiRequest<WhatsAppOrderResponse>(
+    `/api/orders/${orderId}/whatsapp`
+  );
 }

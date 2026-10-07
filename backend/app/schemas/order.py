@@ -21,15 +21,16 @@ class OrderCreate(BaseModel):
     )
     email: EmailStr
 
-    city: str = Field(
-        default="Colombo",
-        min_length=2,
-        max_length=100,
-    )
 
     phone: str = Field(
         min_length=7,
         max_length=30,
+    )
+    
+    city: str = Field(
+        default="Colombo",
+        min_length=2,
+        max_length=100,
     )
 
     delivery_address: str = Field(
@@ -62,8 +63,6 @@ class OrderItemResponse(BaseModel):
 class OrderResponse(BaseModel):
     id: int
     customer_name: str
-    email: str | None
-    city: str | None
     phone: str
     delivery_address: str
     total_amount: Decimal

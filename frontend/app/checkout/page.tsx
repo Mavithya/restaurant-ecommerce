@@ -1,7 +1,7 @@
 "use client";
 
 
-import { createPayHerePayment } from "@/lib/api";
+import { createOrder, createPayHerePayment, getWhatsAppOrderLink } from "@/lib/api";
 import { redirectToPayHere } from "@/lib/payhere";
 
 import {
@@ -21,9 +21,6 @@ import {
   useCart,
 } from "@/components/cart/CartContext";
 
-import {
-  createOrder,
-} from "@/lib/api";
 
 
 type PaymentMethod =
@@ -44,7 +41,12 @@ export default function CheckoutPage() {
 
   const [name, setName] =
     useState("");
-    
+
+  const [email, setEmail] =
+    useState("");
+
+  const [city, setCity] =
+    useState("Colombo");
 
   const [phone, setPhone] =
     useState("");
@@ -61,11 +63,6 @@ export default function CheckoutPage() {
   const [error, setError] =
     useState("");
 
-  const [email, setEmail] =
-    useState("");
-
-  const [city, setCity] =
-    useState("");
 
 
   const deliveryFee =
@@ -116,28 +113,25 @@ export default function CheckoutPage() {
       if (method === "PAYHERE") {
         const nameParts = name.trim().split(/\s+/);
 
-        const payment = await createPayHerePayment(order.id, {
-          first_name: nameParts[0] || name,
-          last_name: nameParts.slice(1).join(" "),
-          email: email,
-          phone: phone,
-          address: address,
-          city: city || "Colombo",
-          country: "Sri Lanka",
-        });
+        const payment =
+          await createPayHerePayment(order.id);
 
-        // Do not clear the cart yet.
-        // Payment has not been confirmed.
         redirectToPayHere(payment);
         return;
+
       }
 
+      if (method === "WHATSAPP") {
+        const whatsapp =
+          await getWhatsAppOrderLink(order.id);
 
-      clearCart();
+        clearCart();
 
+        window.location.href =
+          whatsapp.whatsapp_url;
 
-      window.location.href =
-        `/order-success?orderId=${order.id}`;
+        return;
+      }
     } catch (err) {
       setError(
         err instanceof Error

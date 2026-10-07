@@ -1,4 +1,5 @@
 import hashlib
+import hmac
 from decimal import Decimal
 
 from app.core.config import settings
@@ -61,8 +62,10 @@ def verify_payhere_notification(
 
     expected_signature = md5_upper(raw_string)
 
-    return expected_signature == md5sig.upper()
-
+    return hmac.compare_digest(
+        expected_signature,
+        md5sig.upper(),
+    )
 
 def get_payhere_checkout_url() -> str:
 
