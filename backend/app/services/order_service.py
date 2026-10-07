@@ -98,12 +98,19 @@ def create_order(
     # Create order.
     order = Order(
         customer_name=order_data.customer_name.strip(),
+        email=order_data.email.lower().strip(),
         phone=order_data.phone.strip(),
+        city=order_data.city.strip(),
         delivery_address=order_data.delivery_address.strip(),
+
         total_amount=total_amount,
+
         payment_method=order_data.payment_method,
+
         payment_status="PENDING",
         order_status="PENDING",
+
+        inventory_released=False,
     )
 
     db.add(order)

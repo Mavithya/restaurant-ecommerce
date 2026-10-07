@@ -7,7 +7,10 @@ class Settings(BaseSettings):
     jwt_secret: str
     jwt_algorithm: str = "HS256"
     access_token_expire_minutes: int = 60
-
+     
+    PAYHERE_MERCHANT_ID: str
+    PAYHERE_MERCHANT_SECRET: str
+    PAYHERE_SANDBOX: bool = True
 
     model_config = SettingsConfigDict(
         env_file=".env",

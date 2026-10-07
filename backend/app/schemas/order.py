@@ -1,7 +1,7 @@
 from decimal import Decimal
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field , EmailStr
 
 
 class OrderItemCreate(BaseModel):
@@ -16,6 +16,13 @@ class OrderItemCreate(BaseModel):
 
 class OrderCreate(BaseModel):
     customer_name: str = Field(
+        min_length=2,
+        max_length=100,
+    )
+    email: EmailStr
+
+    city: str = Field(
+        default="Colombo",
         min_length=2,
         max_length=100,
     )
@@ -55,6 +62,8 @@ class OrderItemResponse(BaseModel):
 class OrderResponse(BaseModel):
     id: int
     customer_name: str
+    email: str | None
+    city: str | None
     phone: str
     delivery_address: str
     total_amount: Decimal

@@ -38,6 +38,17 @@ class Order(Base):
         nullable=False,
     )
 
+    email: Mapped[str] = mapped_column(
+        String(255),
+        nullable=True,
+    )
+
+    city: Mapped[str] = mapped_column(
+        String(100),
+        nullable=True,
+        default="Colombo",
+    )
+    
     delivery_address: Mapped[str] = mapped_column(
         Text,
         nullable=False,
@@ -57,6 +68,16 @@ class Order(Base):
         String(20),
         nullable=False,
         default="PENDING",
+    )
+    
+    payment_id: Mapped[str | None] = mapped_column(
+        String(100),
+        nullable=True,
+    )
+
+    inventory_released: Mapped[bool] = mapped_column(
+        default=False,
+        nullable=False,
     )
 
     order_status: Mapped[str] = mapped_column(
