@@ -5,15 +5,18 @@ import Link from "next/link";
 import { ArrowLeft, Plus, Minus } from "lucide-react";
 
 import Navbar from "@/components/layout/Navbar";
+import { useCart } from "@/components/cart/CartContext";
 import { getProduct } from "@/lib/api";
 import type { Product } from "@/types";
 
 
-export default function ProductPage({
-  params,
-}: {
+export default function ProductPage({ params, }: {
   params: Promise<{ id: string }>;
 }) {
+
+  const { addToCart } = useCart();
+  const [added, setAdded] = useState(false);
+
   const [product, setProduct] =
     useState<Product | null>(null);
 
@@ -200,11 +203,25 @@ export default function ProductPage({
 
               <button
                 disabled={unavailable}
+                onClick={() => {
+                  if (!product || unavailable) {
+                    return;
+                  }
+
+                  addToCart(product, quantity);
+                  setAdded(true);
+
+                  setTimeout(() => {
+                    setAdded(false);
+                  }, 1800);
+                }}
                 className="mt-6 h-12 w-full bg-[var(--foreground)] text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 {unavailable
                   ? "Currently unavailable"
-                  : "Add to cart"}
+                  : added
+                    ? "Added to cart ✓"
+                    : "Add to cart"}
               </button>
 
             </div>

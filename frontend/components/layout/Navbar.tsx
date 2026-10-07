@@ -1,12 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingBag, Search } from "lucide-react";
+import {
+  Search,
+  ShoppingBag,
+} from "lucide-react";
+
+import { useCart } from "@/components/cart/CartContext";
+
 
 export default function Navbar() {
+  const { itemCount } = useCart();
+
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--line)] bg-[var(--background)]/95 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
+
         <Link
           href="/"
           className="flex items-center gap-3"
@@ -19,11 +28,13 @@ export default function Navbar() {
             <div className="text-lg font-semibold tracking-tight">
               KORA
             </div>
+
             <div className="text-[10px] uppercase tracking-[0.22em] text-[var(--muted)]">
               Kitchen
             </div>
           </div>
         </Link>
+
 
         <nav className="hidden items-center gap-8 text-sm md:flex">
           <Link
@@ -41,29 +52,45 @@ export default function Navbar() {
           </Link>
 
           <a
-            href="#story"
+            href="/#story"
             className="transition-opacity hover:opacity-60"
           >
             Our Story
           </a>
         </nav>
 
+
         <div className="flex items-center gap-2">
+
           <Link
             href="/menu"
             className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] transition-colors hover:bg-[var(--surface)]"
             aria-label="Search menu"
           >
-            <Search size={17} strokeWidth={1.8} />
+            <Search
+              size={17}
+              strokeWidth={1.8}
+            />
           </Link>
+
 
           <Link
             href="/cart"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] transition-colors hover:bg-[var(--surface)]"
+            className="relative flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] transition-colors hover:bg-[var(--surface)]"
             aria-label="Shopping cart"
           >
-            <ShoppingBag size={17} strokeWidth={1.8} />
+            <ShoppingBag
+              size={17}
+              strokeWidth={1.8}
+            />
+
+            {itemCount > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--accent)] px-1 text-[10px] font-bold text-white">
+                {itemCount}
+              </span>
+            )}
           </Link>
+
         </div>
       </div>
     </header>

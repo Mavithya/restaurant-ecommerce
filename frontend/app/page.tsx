@@ -7,7 +7,6 @@ import {
 
 import Navbar from "@/components/layout/Navbar";
 
-
 const dishes = [
   {
     name: "Chicken Fried Rice",
@@ -42,7 +41,7 @@ export default function Home() {
 
           <div className="flex flex-col justify-center">
 
-            <p className="mb-6 text-xs font-semibold uppercase tracking-[0.24em] text-[var(--accent)]">
+            <p className="mb-6 text-xs font-semibold uppercase tracking-[0.24em] text-(--accent)">
               Kitchen · Crafted Daily
             </p>
 
@@ -54,7 +53,7 @@ export default function Home() {
               explanation.
             </h1>
 
-            <p className="mt-8 max-w-md text-sm leading-7 text-[var(--muted)] sm:text-base">
+            <p className="mt-8 max-w-md text-sm leading-7 text-(--muted) sm:text-base">
               Honest ingredients, familiar flavours
               and a kitchen that takes its time where
               it matters.
@@ -63,7 +62,7 @@ export default function Home() {
             <div className="mt-9 flex flex-wrap gap-3">
               <Link
                 href="/menu"
-                className="inline-flex items-center gap-3 bg-[var(--foreground)] px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
+                className="inline-flex items-center gap-3 bg-(--foreground) px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
               >
                 Browse the menu
                 <ArrowUpRight size={16} />
@@ -71,7 +70,7 @@ export default function Home() {
 
               <a
                 href="#story"
-                className="inline-flex items-center border border-[var(--line)] bg-[var(--surface)] px-6 py-3 text-sm font-semibold"
+                className="inline-flex items-center border border-(--line) bg-(--surface) px-6 py-3 text-sm font-semibold"
               >
                 Our story
               </a>
@@ -83,7 +82,7 @@ export default function Home() {
           {/* Visual block */}
           <div className="mt-12 lg:mt-0 lg:pl-12">
 
-            <div className="relative aspect-[4/5] overflow-hidden bg-[#ddd3c2]">
+            <div className="relative aspect-4/5 overflow-hidden bg-[#ddd3c2]">
 
               <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-8">
 
@@ -105,7 +104,7 @@ export default function Home() {
 
               </div>
 
-              <div className="absolute bottom-6 right-6 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--foreground)] text-xs font-semibold uppercase tracking-widest text-white">
+              <div className="absolute bottom-6 right-6 flex h-16 w-16 items-center justify-center rounded-full bg-(--foreground) text-xs font-semibold uppercase tracking-widest text-white">
                 Eat
               </div>
 
@@ -116,8 +115,8 @@ export default function Home() {
 
 
         {/* Small information row */}
-        <section className="border-y border-[var(--line)]">
-          <div className="mx-auto grid max-w-7xl divide-y divide-[var(--line)] px-5 sm:grid-cols-3 sm:divide-x sm:divide-y-0 lg:px-8">
+        <section className="border-y border-(--line)">
+          <div className="mx-auto grid max-w-7xl divide-y divide-(--line) px-5 sm:grid-cols-3 sm:divide-x sm:divide-y-0 lg:px-8">
 
             <div className="flex items-center gap-4 px-0 py-5 sm:px-6">
               <Clock3 size={18} />
@@ -125,7 +124,7 @@ export default function Home() {
                 <div className="text-xs font-semibold uppercase tracking-[0.13em]">
                   Open daily
                 </div>
-                <div className="mt-1 text-xs text-[var(--muted)]">
+                <div className="mt-1 text-xs text-(--muted)">
                   10:30 AM — 10:00 PM
                 </div>
               </div>
@@ -137,7 +136,7 @@ export default function Home() {
                 <div className="text-xs font-semibold uppercase tracking-[0.13em]">
                   Colombo
                 </div>
-                <div className="mt-1 text-xs text-[var(--muted)]">
+                <div className="mt-1 text-xs text-(--muted)">
                   Delivery available
                 </div>
               </div>
@@ -149,7 +148,7 @@ export default function Home() {
                 <div className="text-xs font-semibold uppercase tracking-[0.13em]">
                   Made fresh
                 </div>
-                <div className="mt-1 text-xs text-[var(--muted)]">
+                <div className="mt-1 text-xs text-(--muted)">
                   No shortcuts
                 </div>
               </div>
@@ -165,7 +164,7 @@ export default function Home() {
           <div className="mb-10 flex items-end justify-between gap-6">
 
             <div>
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-(--accent)">
                 From the kitchen
               </p>
 
@@ -190,9 +189,9 @@ export default function Home() {
               <Link
                 href="/menu"
                 key={dish.name}
-                className="group border border-[var(--line)] bg-[var(--surface)]"
+                className="group border border-(--line) bg-(--surface)"
               >
-                <div className="flex aspect-[5/4] items-center justify-center bg-[#e9e2d6] text-8xl transition-transform duration-500 group-hover:scale-[1.01]">
+                <div className="flex aspect-5/4 items-center justify-center bg-[#e9e2d6] text-8xl transition-transform duration-500 group-hover:scale-[1.01]">
                   {dish.symbol}
                 </div>
 
@@ -207,7 +206,7 @@ export default function Home() {
                     </span>
                   </div>
 
-                  <p className="text-xs uppercase tracking-[0.1em] text-[var(--muted)]">
+                  <p className="text-xs uppercase tracking-widest text-(--muted)">
                     {dish.note}
                   </p>
                 </div>
@@ -221,11 +220,11 @@ export default function Home() {
         {/* Story */}
         <section
           id="story"
-          className="border-t border-[var(--line)]"
+          className="border-t border-(--line)"
         >
           <div className="mx-auto grid max-w-7xl px-5 py-16 lg:grid-cols-[0.75fr_1.25fr] lg:px-8 lg:py-24">
 
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-(--accent)">
               Our story
             </p>
 
@@ -236,7 +235,7 @@ export default function Home() {
                 ingredients.
               </h2>
 
-              <p className="mt-7 max-w-2xl text-sm leading-8 text-[var(--muted)]">
+              <p className="mt-7 max-w-2xl text-sm leading-8 text-(--muted)">
                 KORA is built around a simple idea:
                 make food you'd happily order twice.
                 We keep the menu focused, prepare
@@ -250,8 +249,8 @@ export default function Home() {
 
 
         {/* Footer */}
-        <footer className="border-t border-[var(--line)]">
-          <div className="mx-auto flex max-w-7xl flex-col justify-between gap-5 px-5 py-8 text-xs text-[var(--muted)] sm:flex-row lg:px-8">
+        <footer className="border-t border-(--line)">
+          <div className="mx-auto flex max-w-7xl flex-col justify-between gap-5 px-5 py-8 text-xs text-(--muted) sm:flex-row lg:px-8">
 
             <span>
               © 2026 KORA Kitchen
