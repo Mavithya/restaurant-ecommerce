@@ -231,31 +231,7 @@ export async function getAdminDashboardStats() {
 }
 
 
-export async function getAdminOrders() {
-  return apiRequest<AdminOrder[]>(
-    "/api/admin/orders"
-  );
-}
 
-
-export async function updateAdminOrderStatus(
-  orderId: number,
-  orderStatus: string
-) {
-  return apiRequest<{
-    message: string;
-    order_id: number;
-    order_status: string;
-  }>(
-    `/api/admin/orders/${orderId}/status`,
-    {
-      method: "PATCH",
-      body: JSON.stringify({
-        status: orderStatus,
-      }),
-    }
-  );
-}
 
 export interface ProductCreatePayload {
   name: string;
@@ -315,6 +291,111 @@ export async function deleteProduct(
     `/api/products/${productId}`,
     {
       method: "DELETE",
+    }
+  );
+}
+
+
+export interface CategoryPayload {
+  name: string;
+  description: string | null;
+}
+
+
+export async function createCategory(
+  payload: CategoryPayload
+) {
+  return apiRequest<Category>(
+    "/api/categories",
+    {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }
+  );
+}
+
+
+export async function updateCategory(
+  categoryId: number,
+  payload: Partial<CategoryPayload>
+) {
+  return apiRequest<Category>(
+    `/api/categories/${categoryId}`,
+    {
+      method: "PUT",
+      body: JSON.stringify(payload),
+    }
+  );
+}
+
+
+export async function deleteCategory(
+  categoryId: number
+) {
+  return apiRequest<{
+    message: string;
+  }>(
+    `/api/categories/${categoryId}`,
+    {
+      method: "DELETE",
+    }
+  );
+}
+
+export interface AdminOrderItem {
+  id: number;
+  product_id: number;
+  quantity: number;
+  unit_price: number | string;
+  subtotal: number | string;
+
+  product?: {
+    id: number;
+    name: string;
+  };
+}
+
+
+export interface AdminOrder {
+  id: number;
+  customer_name: string;
+  phone: string;
+  delivery_address: string;
+  total_amount: number | string;
+
+  payment_method:
+    | "PAYHERE"
+    | "WHATSAPP";
+
+  payment_status: string;
+  order_status: string;
+
+  items: AdminOrderItem[];
+}
+
+
+export async function getAdminOrders() {
+  return apiRequest<AdminOrder[]>(
+    "/api/admin/orders"
+  );
+}
+
+
+export async function updateAdminOrderStatus(
+  orderId: number,
+  orderStatus: string
+) {
+  return apiRequest<{
+    message: string;
+    order_id: number;
+    order_status: string;
+  }>(
+    `/api/admin/orders/${orderId}/status`,
+    {
+      method: "PATCH",
+      body: JSON.stringify({
+        status: orderStatus,
+      }),
     }
   );
 }

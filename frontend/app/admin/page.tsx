@@ -224,12 +224,11 @@ export default function AdminPage() {
 
     return (
         <main className="min-h-screen bg-(--background) px-5 py-10 lg:px-8">
-
             <div className="mx-auto max-w-7xl">
 
-                {/* Header */}
 
-                <div className="flex flex-col gap-5 border-b border-(--line) pb-8 md:flex-row md:items-end md:justify-between">
+                {/* Header */}
+                <div className="mt-8 flex flex-col gap-5 border-b border-(--line) pb-8 md:flex-row md:items-end md:justify-between">
 
                     <div>
                         <p className="text-xs uppercase tracking-[0.22em] text-(--muted)">
@@ -254,19 +253,12 @@ export default function AdminPage() {
 
                 </div>
 
-
-                {/* Error */}
-
-                {error && (
-                    <div className="mt-6 border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                        {error}
-                    </div>
-                )}
-                <div className="mt-6 flex flex-wrap gap-2">
+                {/* Admin Navigation */}
+                <div className="flex flex-wrap gap-2">
                     <button
                         type="button"
                         onClick={() => router.push("/admin")}
-                        className="rounded-full border border-(--foreground) bg-(--foreground) px-4 py-2 text-xs font-semibold text-(--background)"
+                        className="rounded-full border border-(--foreground) bg-(--foreground) px-5 py-2.5 text-sm font-medium text-(--background)"
                     >
                         Overview
                     </button>
@@ -276,32 +268,35 @@ export default function AdminPage() {
                         onClick={() =>
                             router.push("/admin/products")
                         }
-                        className="border border-(--line) bg-(--surface) p-6 text-left transition hover:-translate-y-0.5 hover:shadow-sm"
+                        className="rounded-full border border-(--line) px-5 py-2.5 text-sm font-medium transition-colors hover:bg-(--surface)"
                     >
-                        <p className="text-lg font-semibold">
-                            Products & Inventory
-                        </p>
-
-                        <p className="mt-2 text-sm text-(--muted)">
-                            Add, edit, disable and manage restaurant stock.
-                        </p>
-
-                        <p className="mt-5 text-xs font-semibold uppercase tracking-[0.14em]">
-                            Manage →
-                        </p>
+                        Products
                     </button>
 
                     <button
                         type="button"
-                        onClick={() => router.push("/admin/categories")}
-                        className="rounded-full border border-(--line) px-4 py-2 text-xs font-semibold"
+                        onClick={() =>
+                            router.push("/admin/categories")
+                        }
+                        className="rounded-full border border-(--line) px-5 py-2.5 text-sm font-medium transition-colors hover:bg-(--surface)"
                     >
                         Categories
                     </button>
                 </div>
 
-                {/* Statistics */}
 
+
+
+
+                {/* Error */}
+                {error && (
+                    <div className="mt-6 border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                        {error}
+                    </div>
+                )}
+
+
+                {/* Dashboard Statistics */}
                 <section className="mt-8 grid gap-px overflow-hidden border border-(--line) bg-(--line) sm:grid-cols-2 lg:grid-cols-4">
 
                     <StatCard
@@ -327,8 +322,7 @@ export default function AdminPage() {
                 </section>
 
 
-                {/* Revenue + Inventory */}
-
+                {/* Revenue + Low Stock */}
                 <section className="mt-8 grid gap-6 md:grid-cols-2">
 
                     <div className="border border-(--line) bg-(--surface) p-6">
@@ -338,9 +332,7 @@ export default function AdminPage() {
                         </p>
 
                         <p className="mt-3 text-3xl font-semibold tracking-tight">
-                            {money(
-                                stats?.paid_revenue ?? 0
-                            )}
+                            {money(stats?.paid_revenue ?? 0)}
                         </p>
 
                     </div>
@@ -366,7 +358,6 @@ export default function AdminPage() {
 
 
                 {/* Orders */}
-
                 <section className="mt-10">
 
                     <div className="mb-5">
@@ -488,17 +479,13 @@ export default function AdminPage() {
 
 
                                             <td className="px-5 py-5 align-top font-semibold">
-                                                {money(
-                                                    order.total_amount
-                                                )}
+                                                {money(order.total_amount)}
                                             </td>
 
 
                                             <td className="px-5 py-5 align-top">
 
-                                                <span
-                                                    className="inline-flex rounded-full border border-(--line) px-3 py-1 text-xs font-medium"
-                                                >
+                                                <span className="inline-flex rounded-full border border-(--line) px-3 py-1 text-xs font-medium">
                                                     {statusLabel(
                                                         order.payment_status
                                                     )}
@@ -510,9 +497,7 @@ export default function AdminPage() {
                                             <td className="px-5 py-5 align-top">
 
                                                 <select
-                                                    value={
-                                                        order.order_status
-                                                    }
+                                                    value={order.order_status}
                                                     disabled={
                                                         updatingOrder === order.id
                                                     }
@@ -531,9 +516,7 @@ export default function AdminPage() {
                                                                 key={status}
                                                                 value={status}
                                                             >
-                                                                {statusLabel(
-                                                                    status
-                                                                )}
+                                                                {statusLabel(status)}
                                                             </option>
                                                         )
                                                     )}
@@ -557,30 +540,53 @@ export default function AdminPage() {
                 </section>
 
 
-                {/* Product / Category management links */}
-
+                {/* Management Cards */}
                 <section className="mt-10 grid gap-4 md:grid-cols-2">
 
-                    <AdminActionCard
-                        title="Products & Inventory"
-                        description="Add, edit, disable and manage product stock."
+                    <button
+                        type="button"
                         onClick={() =>
                             router.push("/admin/products")
                         }
-                    />
+                        className="border border-(--line) bg-(--surface) p-6 text-left transition hover:-translate-y-0.5 hover:shadow-sm"
+                    >
+                        <p className="text-lg font-semibold">
+                            Products & Inventory
+                        </p>
 
-                    <AdminActionCard
-                        title="Categories"
-                        description="Create and maintain your restaurant menu categories."
+                        <p className="mt-2 text-sm text-(--muted)">
+                            Add, edit, disable and manage restaurant stock.
+                        </p>
+
+                        <p className="mt-5 text-xs font-semibold uppercase tracking-[0.14em]">
+                            Manage →
+                        </p>
+                    </button>
+
+
+                    <button
+                        type="button"
                         onClick={() =>
                             router.push("/admin/categories")
                         }
-                    />
+                        className="border border-(--line) bg-(--surface) p-6 text-left transition hover:-translate-y-0.5 hover:shadow-sm"
+                    >
+                        <p className="text-lg font-semibold">
+                            Categories
+                        </p>
+
+                        <p className="mt-2 text-sm text-(--muted)">
+                            Create and manage restaurant menu categories.
+                        </p>
+
+                        <p className="mt-5 text-xs font-semibold uppercase tracking-[0.14em]">
+                            Manage →
+                        </p>
+                    </button>
 
                 </section>
 
             </div>
-
         </main>
     );
 }

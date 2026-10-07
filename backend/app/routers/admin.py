@@ -16,11 +16,11 @@ from app.models import (
 )
 
 
+
 router = APIRouter(
     prefix="/api/admin",
     tags=["Admin"],
 )
-
 
 class OrderStatusUpdate(BaseModel):
     status: Literal[
@@ -32,7 +32,96 @@ class OrderStatusUpdate(BaseModel):
         "CANCELLED",
     ]
 
+@router.get("/orders")
+def get_admin_orders(
+    db: Annotated[
+        Session,
+        Depends(get_db),
+    ],
+    _: Annotated[
+        User,
+        Depends(require_admin),
+    ],
+):
+    orders = db.scalars(
+        select(Order)
+        .options(
+            joinedload(Order.items)
+            .joinedload(OrderItem.product)
+        )
+        .order_by(
+            Order.created_at.desc()
+        )
+    ).unique().all()
 
+    return orders
+
+
+
+@router.patch(
+    "/orders/{order_id}/status"
+)
+def update_admin_order_status(
+    order_id: int,
+    status_data: OrderStatusUpdate,
+    db: Annotated[
+        Session,
+        Depends(get_db),
+    ],
+    _: Annotated[
+        User,
+        Depends(require_admin),
+    ],
+):
+    order = db.get(
+        Order,
+        order_id,
+    )
+
+    if order is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Order not found",
+        )
+
+    current = order.order_status
+    new_status = status_data.status
+
+    if (
+        current == "CANCELLED"
+        and new_status != "CANCELLED"
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Cancelled orders cannot be reopened",
+        )
+
+    if (
+        current == "DELIVERED"
+        and new_status not in {
+            "DELIVERED",
+            "CANCELLED",
+        }
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Delivered orders cannot move backwards",
+        )
+
+    order.order_status = new_status
+
+    db.commit()
+    db.refresh(order)
+
+    return {
+        "message":
+            "Order status updated successfully",
+        "order_id":
+            order.id,
+        "order_status":
+            order.order_status,
+    }
+    
 @router.get("/test")
 def admin_test(
     current_user: Annotated[
