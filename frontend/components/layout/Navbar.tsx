@@ -7,10 +7,12 @@ import {
 } from "lucide-react";
 
 import { useCart } from "@/components/cart/CartContext";
+import { useAuth } from "@/components/auth/AuthContext";
 
 
 export default function Navbar() {
   const { itemCount } = useCart();
+  const { user, loading, logout } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 border-b border-(--line) bg-(--background)/95 backdrop-blur">
@@ -92,7 +94,46 @@ export default function Navbar() {
           </Link>
 
         </div>
+
+        {!loading && (
+  <>
+    {user ? (
+      <div className="flex items-center gap-2">
+
+        <span className="hidden text-sm md:block">
+          {user.name}
+        </span>
+
+        {user.role === "ADMIN" && (
+          <Link
+            href="/admin"
+            className="hidden text-xs font-semibold uppercase tracking-[0.12em] md:block"
+          >
+            Admin
+          </Link>
+        )}
+
+        <button
+          type="button"
+          onClick={logout}
+          className="flex h-10 items-center rounded-full border border-(--line) px-4 text-xs font-semibold transition-colors hover:bg-(--surface)"
+        >
+          Logout
+        </button>
+
       </div>
+    ) : (
+      <Link
+        href="/login"
+        className="flex h-10 items-center rounded-full border border-(--line) px-4 text-xs font-semibold transition-colors hover:bg-(--surface)"
+      >
+        Sign in
+      </Link>
+    )}
+  </>
+)}
+      </div>
+      
     </header>
   );
 }

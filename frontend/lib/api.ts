@@ -1,30 +1,79 @@
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
+const TOKEN_KEY =
+  "kora-access-token";
+
+
 async function apiRequest<T>(
   endpoint: string,
   options?: RequestInit
 ): Promise<T> {
+
+  const headers = new Headers(
+    options?.headers
+  );
+
+  if (
+    options?.body &&
+    !(options.body instanceof FormData) &&
+    !headers.has("Content-Type")
+  ) {
+    headers.set(
+      "Content-Type",
+      "application/json"
+    );
+  }
+
+  if (
+    typeof window !== "undefined"
+  ) {
+    const token =
+      localStorage.getItem(
+        TOKEN_KEY
+      );
+
+    if (token) {
+      headers.set(
+        "Authorization",
+        `Bearer ${token}`
+      );
+    }
+  }
+
   const response = await fetch(
     `${API_URL}${endpoint}`,
     {
       ...options,
-      headers: {
-        "Content-Type": "application/json",
-        ...options?.headers,
-      },
+      headers,
       cache: "no-store",
     }
   );
 
   if (!response.ok) {
-    let message = "Something went wrong";
+
+    if (
+      response.status === 401 &&
+      typeof window !== "undefined"
+    ) {
+      localStorage.removeItem(
+        TOKEN_KEY
+      );
+    }
+
+    let message =
+      "Something went wrong";
 
     try {
-      const errorData = await response.json();
-      message = errorData.detail || message;
+      const errorData =
+        await response.json();
+
+      message =
+        errorData.detail ||
+        message;
+
     } catch {
-      // Keep default message if response is not JSON
+      // Keep default message
     }
 
     throw new Error(message);
@@ -32,7 +81,6 @@ async function apiRequest<T>(
 
   return response.json();
 }
-
 
 export async function getCategories() {
   return apiRequest<Category[]>(
