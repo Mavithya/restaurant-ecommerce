@@ -28,3 +28,9 @@ def get_db():
         yield db
     finally:
         db.close()
+
+def init_db():
+    # Import models so SQLAlchemy knows about all tables
+    from app.models import Category, Order, OrderItem, Product, User
+
+    Base.metadata.create_all(bind=engine)

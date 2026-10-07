@@ -1,13 +1,23 @@
 from fastapi import FastAPI
 from sqlalchemy import text
+from contextlib import asynccontextmanager
 
-from app.db.database import engine
+from app.db.database import engine , init_db
+from app.routers import auth,admin
 
 app = FastAPI(
     title="Restaurant E-Commerce API",
     version="1.0.0",
 )
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_db()
+    yield
+
+
+app.include_router(auth.router)
+app.include_router(admin.router)
 
 @app.get("/")
 def root():
