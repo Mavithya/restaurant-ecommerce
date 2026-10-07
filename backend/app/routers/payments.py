@@ -1,18 +1,20 @@
 from decimal import Decimal ,InvalidOperation
 
-from fastapi import APIRouter, Depends, Form, HTTPException
+from fastapi import APIRouter, Depends, Form, HTTPException , status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from app.core.config import settings
 from app.db.database import get_db
 from app.models.order import Order
-from app.models.product import Product
+
 from app.services.payment_service import (
     generate_payhere_hash,
     get_payhere_checkout_url,
     verify_payhere_notification,
 )
-
+from app.services.inventory_service import (
+    release_order_inventory,
+)
 
 router = APIRouter(
     prefix="/api/payments",
@@ -123,46 +125,49 @@ def create_payhere_payment(
         "payload": payload,
     }
 
-def release_order_inventory(
-    db: Session,
-    order: Order,
-) -> None:
 
-    if order.inventory_released:
-        return
+# def release_order_inventory(
+#     db: Session,
+#     order: Order,
+# ) -> None:
 
-    product_ids = [
-        item.product_id
-        for item in order.items
-    ]
+#     if order.inventory_released:
+#         return
 
-    if not product_ids:
-        order.inventory_released = True
-        return
+#     product_ids = [
+#         item.product_id
+#         for item in order.items
+#     ]
 
-    products = db.scalars(
-        select(Product)
-        .where(Product.id.in_(product_ids))
-        .with_for_update()
-    ).all()
+#     if not product_ids:
+#         order.inventory_released = True
+#         return
 
-    products_by_id = {
-        product.id: product
-        for product in products
-    }
+#     products = db.scalars(
+#         select(Product)
+#         .where(Product.id.in_(product_ids))
+#         .with_for_update()
+#     ).all()
 
-    for item in order.items:
-        product = products_by_id.get(
-            item.product_id
-        )
+#     products_by_id = {
+#         product.id: product
+#         for product in products
+#     }
 
-        if product is None:
-            continue
+#     for item in order.items:
+#         product = products_by_id.get(
+#             item.product_id
+#         )
 
-        product.stock += item.quantity
-        product.is_available = True
+#         if product is None:
+#             continue
 
-    order.inventory_released = True
+#         product.stock += item.quantity
+#         product.is_available = True
+
+#     order.inventory_released = True
+
+
 
 @router.post("/payhere/notify")
 def payhere_notify(
