@@ -13,14 +13,14 @@ export default function Navbar() {
   const { itemCount } = useCart();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--line)] bg-[var(--background)]/95 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-(--line) bg-(--background)/95 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
 
         <Link
           href="/"
           className="flex items-center gap-3"
         >
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--foreground)] text-sm font-bold text-[var(--background)]">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-(--foreground) text-sm font-bold text-(--background)">
             K
           </div>
 
@@ -29,7 +29,7 @@ export default function Navbar() {
               KORA
             </div>
 
-            <div className="text-[10px] uppercase tracking-[0.22em] text-[var(--muted)]">
+            <div className="text-[10px] uppercase tracking-[0.22em] text-(--muted)">
               Kitchen
             </div>
           </div>
@@ -64,7 +64,7 @@ export default function Navbar() {
 
           <Link
             href="/menu"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] transition-colors hover:bg-[var(--surface)]"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-(--line) transition-colors hover:bg-(--surface)"
             aria-label="Search menu"
           >
             <Search
@@ -76,7 +76,7 @@ export default function Navbar() {
 
           <Link
             href="/cart"
-            className="relative flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] transition-colors hover:bg-[var(--surface)]"
+            className="relative flex h-10 w-10 items-center justify-center rounded-full border border-(--line) transition-colors hover:bg-(--surface)"
             aria-label="Shopping cart"
           >
             <ShoppingBag
@@ -85,7 +85,7 @@ export default function Navbar() {
             />
 
             {itemCount > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--accent)] px-1 text-[10px] font-bold text-white">
+              <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-(--accent) px-1 text-[10px] font-bold text-white">
                 {itemCount}
               </span>
             )}

@@ -23,8 +23,8 @@ export default function CategoryFilter({
         onClick={() => onCategoryChange(null)}
         className={`whitespace-nowrap px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] transition-colors ${
           selectedCategory === null
-            ? "bg-[var(--foreground)] text-white"
-            : "border border-[var(--line)] bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--foreground)]"
+            ? "bg-(--foreground) text-white"
+            : "border border-(--line) bg-(--surface) text-(--muted) hover:text-(--foreground)"
         }`}
       >
         All
@@ -38,8 +38,8 @@ export default function CategoryFilter({
           }
           className={`whitespace-nowrap px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] transition-colors ${
             selectedCategory === category.id
-              ? "bg-[var(--foreground)] text-white"
-              : "border border-[var(--line)] bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--foreground)]"
+              ? "bg-(--foreground) text-white"
+              : "border border-(--line) bg-(--surface) text-(--muted) hover:text-(--foreground)"
           }`}
         >
           {category.name}

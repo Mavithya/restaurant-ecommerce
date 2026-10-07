@@ -32,7 +32,7 @@ export default function CartItem({
 
 
   return (
-    <div className="grid gap-5 border-b border-[var(--line)] py-6 sm:grid-cols-[120px_1fr_auto] sm:items-center">
+    <div className="grid gap-5 border-b border-(--line) py-6 sm:grid-cols-[120px_1fr_auto] sm:items-center">
 
       {/* Image */}
       <div className="flex aspect-square items-center justify-center overflow-hidden bg-[#e8e1d5]">
@@ -58,7 +58,7 @@ export default function CartItem({
               {item.product.name}
             </h3>
 
-            <p className="mt-1 text-xs text-[var(--muted)]">
+            <p className="mt-1 text-xs text-(--muted)">
               Rs.{" "}
               {price.toLocaleString("en-LK")} each
             </p>
@@ -70,7 +70,7 @@ export default function CartItem({
                 item.product.id
               )
             }
-            className="text-[var(--muted)] transition-colors hover:text-red-600"
+            className="text-(--muted) transition-colors hover:text-red-600"
             aria-label={`Remove ${item.product.name}`}
           >
             <Trash2 size={17} />
@@ -80,7 +80,7 @@ export default function CartItem({
 
         <div className="mt-5 flex items-center justify-between gap-4">
 
-          <div className="flex h-10 items-center border border-[var(--line)]">
+          <div className="flex h-10 items-center border border-(--line)">
 
             <button
               onClick={() =>

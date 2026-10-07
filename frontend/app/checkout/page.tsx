@@ -155,7 +155,7 @@ export default function CheckoutPage() {
 
         <Link
           href="/cart"
-          className="mb-10 inline-flex items-center gap-2 text-sm text-[var(--muted)]"
+          className="mb-10 inline-flex items-center gap-2 text-sm text-(--muted)"
         >
           <ArrowLeft size={16} />
           Back to cart
@@ -166,7 +166,7 @@ export default function CheckoutPage() {
 
           {/* Form */}
           <section>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-(--accent)">
               Almost there
             </p>
 
@@ -174,7 +174,7 @@ export default function CheckoutPage() {
               Checkout
             </h1>
 
-            <p className="mt-5 max-w-xl text-sm leading-7 text-[var(--muted)]">
+            <p className="mt-5 max-w-xl text-sm leading-7 text-(--muted)">
               Tell us where to bring your
               order and how you'd like to
               place it.
@@ -213,7 +213,7 @@ export default function CheckoutPage() {
                         e.target.value
                       )
                     }
-                    className="h-12 w-full border border-[var(--line)] bg-[var(--surface)] px-4 text-sm outline-none focus:border-[var(--foreground)]"
+                    className="h-12 w-full border border-(--line) bg-(--surface) px-4 text-sm outline-none focus:ring-1 focus:ring-(--foreground)"
                     placeholder="Mavithya"
                   />
                 </div>
@@ -237,7 +237,7 @@ export default function CheckoutPage() {
                         e.target.value
                       )
                     }
-                    className="h-12 w-full border border-[var(--line)] bg-[var(--surface)] px-4 text-sm outline-none focus:border-[var(--foreground)]"
+                    className="h-12 w-full border border-(--line) bg-(--surface) px-4 text-sm outline-none focus:ring-1 focus:ring-(--foreground)"
                     placeholder="0712345678"
                   />
                 </div>
@@ -262,7 +262,7 @@ export default function CheckoutPage() {
                       )
                     }
                     rows={4}
-                    className="w-full resize-none border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm outline-none focus:border-[var(--foreground)]"
+                    className="w-full resize-none border border-(--line) bg-(--surface) px-4 py-3 text-sm outline-none focus:ring-1 focus:ring-(--foreground)"
                     placeholder="House number, street, area, city"
                   />
                 </div>
@@ -282,8 +282,8 @@ export default function CheckoutPage() {
                       }
                       className={`border p-5 text-left transition-colors ${
                         method === "PAYHERE"
-                          ? "border-[var(--foreground)] bg-[var(--foreground)] text-white"
-                          : "border-[var(--line)] bg-[var(--surface)]"
+                          ? "border-(--foreground) bg-(--foreground) text-white"
+                          : "border-(--line) bg-(--surface)"
                       }`}
                     >
                       <div className="text-sm font-semibold">
@@ -294,7 +294,7 @@ export default function CheckoutPage() {
                         className={`mt-2 text-xs leading-5 ${
                           method === "PAYHERE"
                             ? "text-white/70"
-                            : "text-[var(--muted)]"
+                            : "text-(--muted)"
                         }`}
                       >
                         Pay online using
@@ -310,8 +310,8 @@ export default function CheckoutPage() {
                       }
                       className={`border p-5 text-left transition-colors ${
                         method === "WHATSAPP"
-                          ? "border-[var(--foreground)] bg-[var(--foreground)] text-white"
-                          : "border-[var(--line)] bg-[var(--surface)]"
+                          ? "border-(--foreground) bg-(--foreground) text-white"
+                          : "border-(--line) bg-(--surface)"
                       }`}
                     >
                       <div className="text-sm font-semibold">
@@ -322,7 +322,7 @@ export default function CheckoutPage() {
                         className={`mt-2 text-xs leading-5 ${
                           method === "WHATSAPP"
                             ? "text-white/70"
-                            : "text-[var(--muted)]"
+                            : "text-(--muted)"
                         }`}
                       >
                         Send your complete
@@ -337,7 +337,7 @@ export default function CheckoutPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex h-12 w-full items-center justify-center gap-3 bg-[var(--foreground)] text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-12 w-full items-center justify-center gap-3 bg-(--foreground) text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {loading
                     ? "Creating order..."
@@ -355,9 +355,9 @@ export default function CheckoutPage() {
 
 
           {/* Summary */}
-          <aside className="h-fit border border-[var(--line)] bg-[var(--surface)] p-6 sm:p-7">
+          <aside className="h-fit border border-(--line) bg-(--surface) p-6 sm:p-7">
 
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-(--muted)">
               Order summary
             </p>
 
@@ -374,7 +374,7 @@ export default function CheckoutPage() {
                       {item.product.name}
                     </div>
 
-                    <div className="mt-1 text-xs text-[var(--muted)]">
+                    <div className="mt-1 text-xs text-(--muted)">
                       {item.quantity} × Rs.{" "}
                       {Number(
                         item.product.price
@@ -400,13 +400,13 @@ export default function CheckoutPage() {
             </div>
 
 
-            <div className="my-7 border-t border-[var(--line)]" />
+            <div className="my-7 border-t border-(--line)" />
 
 
             <div className="space-y-4 text-sm">
 
               <div className="flex justify-between">
-                <span className="text-[var(--muted)]">
+                <span className="text-(--muted)">
                   Subtotal
                 </span>
 
@@ -420,7 +420,7 @@ export default function CheckoutPage() {
 
 
               <div className="flex justify-between">
-                <span className="text-[var(--muted)]">
+                <span className="text-(--muted)">
                   Delivery
                 </span>
 
@@ -435,7 +435,7 @@ export default function CheckoutPage() {
             </div>
 
 
-            <div className="my-6 border-t border-[var(--line)]" />
+            <div className="my-6 border-t border-(--line)" />
 
 
             <div className="flex justify-between">

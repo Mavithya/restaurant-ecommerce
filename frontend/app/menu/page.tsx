@@ -98,7 +98,7 @@ export default function MenuPage() {
         {/* Header */}
         <section className="mb-14 flex flex-col justify-between gap-8 md:flex-row md:items-end">
           <div className="max-w-2xl">
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--accent)]">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-(--accent)">
               The KORA menu
             </p>
 
@@ -108,14 +108,14 @@ export default function MenuPage() {
               coming back for.
             </h1>
 
-            <p className="mt-6 max-w-lg text-sm leading-7 text-[var(--muted)]">
+            <p className="mt-6 max-w-lg text-sm leading-7 text-(--muted)">
               Familiar favourites, made fresh.
               Browse today's selection and
               build your order in a few clicks.
             </p>
           </div>
 
-          <div className="text-sm text-[var(--muted)]">
+          <div className="text-sm text-(--muted)">
             {products.length} items
           </div>
         </section>
@@ -126,7 +126,7 @@ export default function MenuPage() {
           <div className="relative max-w-2xl">
             <Search
               size={18}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)]"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-(--muted)"
             />
 
             <input
@@ -136,7 +136,7 @@ export default function MenuPage() {
                 setSearch(event.target.value)
               }
               placeholder="Search dishes..."
-              className="h-12 w-full border border-[var(--line)] bg-[var(--surface)] pl-11 pr-4 text-sm outline-none transition-colors focus:border-[var(--foreground)]"
+              className="h-12 w-full border border-(--line) bg-(--surface) pl-11 pr-4 text-sm outline-none transition-colors focus:border-(--foreground)"
             />
           </div>
         </section>
@@ -146,7 +146,7 @@ export default function MenuPage() {
         <section className="mb-12 flex items-center gap-3">
           <SlidersHorizontal
             size={16}
-            className="shrink-0 text-[var(--muted)]"
+            className="shrink-0 text-(--muted)"
           />
 
           <CategoryFilter
@@ -176,9 +176,9 @@ export default function MenuPage() {
               (item) => (
                 <div
                   key={item}
-                  className="animate-pulse border border-[var(--line)] bg-[var(--surface)]"
+                  className="animate-pulse border border-(--line) bg-(--surface)"
                 >
-                  <div className="aspect-[4/3] bg-[#e8e2d8]" />
+                  <div className="aspect-4/3 bg-[#e8e2d8]" />
 
                   <div className="space-y-3 p-5">
                     <div className="h-5 w-2/3 bg-[#e8e2d8]" />
@@ -210,12 +210,12 @@ export default function MenuPage() {
         {!loading &&
           !error &&
           products.length === 0 && (
-            <div className="border border-dashed border-[var(--line)] bg-[var(--surface)] px-6 py-20 text-center">
+            <div className="border border-dashed border-(--line) bg-(--surface) px-6 py-20 text-center">
               <p className="font-serif text-3xl">
                 Nothing found.
               </p>
 
-              <p className="mt-3 text-sm text-[var(--muted)]">
+              <p className="mt-3 text-sm text-(--muted)">
                 Try another dish or category.
               </p>
             </div>

@@ -16,13 +16,13 @@ export default function OrderSuccessPage() {
 
       <main className="mx-auto flex max-w-3xl px-5 py-20 lg:px-8 lg:py-28">
 
-        <div className="w-full border border-[var(--line)] bg-[var(--surface)] p-8 text-center sm:p-14">
+        <div className="w-full border border-(--line) bg-(--surface) p-8 text-center sm:p-14">
 
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[var(--foreground)] text-white">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-(--foreground) text-white">
             <Check size={28} />
           </div>
 
-          <p className="mt-8 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">
+          <p className="mt-8 text-xs font-semibold uppercase tracking-[0.2em] text-(--accent)">
             Order received
           </p>
 
@@ -30,14 +30,14 @@ export default function OrderSuccessPage() {
             Thank you.
           </h1>
 
-          <p className="mx-auto mt-6 max-w-md text-sm leading-7 text-[var(--muted)]">
+          <p className="mx-auto mt-6 max-w-md text-sm leading-7 text-(--muted)">
             Your order has been received.
             We'll take it from here.
           </p>
 
           <Link
             href="/menu"
-            className="mt-9 inline-flex items-center gap-3 bg-[var(--foreground)] px-6 py-3 text-sm font-semibold text-white"
+            className="mt-9 inline-flex items-center gap-3 bg-(--foreground) px-6 py-3 text-sm font-semibold text-white"
           >
             Back to menu
             <ArrowRight size={16} />

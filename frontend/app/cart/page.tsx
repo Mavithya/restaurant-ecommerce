@@ -41,7 +41,7 @@ export default function CartPage() {
 
         <main className="mx-auto max-w-7xl px-5 py-16 lg:px-8 lg:py-24">
 
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-(--accent)">
             Your order
           </p>
 
@@ -53,7 +53,7 @@ export default function CartPage() {
               is waiting.
             </h1>
 
-            <p className="mt-6 text-sm leading-7 text-[var(--muted)]">
+            <p className="mt-6 text-sm leading-7 text-(--muted)">
               Nothing here yet. Have a look
               around the menu and find something
               worth bringing home.
@@ -61,7 +61,7 @@ export default function CartPage() {
 
             <Link
               href="/menu"
-              className="mt-8 inline-flex items-center gap-3 bg-[var(--foreground)] px-6 py-3 text-sm font-semibold text-white"
+              className="mt-8 inline-flex items-center gap-3 bg-(--foreground) px-6 py-3 text-sm font-semibold text-white"
             >
               Browse the menu
               <ArrowRight size={16} />
@@ -80,10 +80,10 @@ export default function CartPage() {
 
       <main className="mx-auto max-w-7xl px-5 py-12 lg:px-8 lg:py-20">
 
-        <div className="flex flex-col justify-between gap-6 border-b border-[var(--line)] pb-10 sm:flex-row sm:items-end">
+        <div className="flex flex-col justify-between gap-6 border-b border-(--line) pb-10 sm:flex-row sm:items-end">
 
           <div>
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-(--accent)">
               Your order
             </p>
 
@@ -92,7 +92,7 @@ export default function CartPage() {
             </h1>
           </div>
 
-          <div className="flex items-center gap-5 text-sm text-[var(--muted)]">
+          <div className="flex items-center gap-5 text-sm text-(--muted)">
             <span>
               {itemCount}{" "}
               {itemCount === 1
@@ -132,16 +132,16 @@ export default function CartPage() {
 
 
           {/* Summary */}
-          <aside className="h-fit border border-[var(--line)] bg-[var(--surface)] p-6 sm:p-7">
+          <aside className="h-fit border border-(--line) bg-(--surface) p-6 sm:p-7">
 
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-(--muted)">
               Order summary
             </p>
 
             <div className="mt-7 space-y-4 text-sm">
 
               <div className="flex justify-between gap-4">
-                <span className="text-[var(--muted)]">
+                <span className="text-(--muted)">
                   Subtotal
                 </span>
 
@@ -155,7 +155,7 @@ export default function CartPage() {
 
 
               <div className="flex justify-between gap-4">
-                <span className="text-[var(--muted)]">
+                <span className="text-(--muted)">
                   Delivery
                 </span>
 
@@ -170,7 +170,7 @@ export default function CartPage() {
             </div>
 
 
-            <div className="my-6 border-t border-[var(--line)]" />
+            <div className="my-6 border-t border-(--line)" />
 
 
             <div className="flex justify-between gap-4">
@@ -189,13 +189,13 @@ export default function CartPage() {
 
             <Link
               href="/checkout"
-              className="mt-7 flex h-12 items-center justify-center gap-2 bg-[var(--foreground)] text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
+              className="mt-7 flex h-12 items-center justify-center gap-2 bg-(--foreground) text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
             >
               Proceed to checkout
               <ArrowRight size={16} />
             </Link>
 
-            <p className="mt-4 text-center text-[11px] leading-5 text-[var(--muted)]">
+            <p className="mt-4 text-center text-[11px] leading-5 text-(--muted)">
               Delivery fee is currently
               Rs. 300 per order.
             </p>

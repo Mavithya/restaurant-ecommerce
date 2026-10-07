@@ -20,12 +20,12 @@ export default function ProductCard({
     !product.is_available || product.stock <= 0;
 
   return (
-    <article className="group overflow-hidden border border-[var(--line)] bg-[var(--surface)]">
+    <article className="group overflow-hidden border border-(--line) bg-(--surface)">
       <Link
         href={`/products/${product.id}`}
         className="block"
       >
-        <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-[#e6dfd2]">
+        <div className="relative flex aspect-4/3 items-center justify-center overflow-hidden bg-[#e6dfd2]">
           {product.image_url ? (
             <img
               src={product.image_url}
@@ -43,7 +43,7 @@ export default function ProductCard({
           )}
 
           {unavailable && (
-            <div className="absolute left-4 top-4 bg-[var(--foreground)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+            <div className="absolute left-4 top-4 bg-(--foreground) px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
               Sold out
             </div>
           )}
@@ -64,7 +64,7 @@ export default function ProductCard({
             </span>
           </div>
 
-          <p className="line-clamp-2 text-sm leading-6 text-[var(--muted)]">
+          <p className="line-clamp-2 text-sm leading-6 text-(--muted)">
             {product.description ||
               "Freshly prepared and made to order."}
           </p>
