@@ -36,3 +36,15 @@ export interface Order {
   order_status: string;
   items: OrderItem[];
 }
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: "CUSTOMER" | "ADMIN" | string;
+}
+
+export interface AuthToken {
+  access_token: string;
+  token_type: string;
+}

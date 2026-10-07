@@ -2,6 +2,7 @@ from datetime import datetime
 from decimal import Decimal
 
 from sqlalchemy import (
+    Boolean,
     DateTime,
     ForeignKey,
     Numeric,
@@ -33,11 +34,23 @@ class Order(Base):
         nullable=False,
     )
 
+    email: Mapped[str] = mapped_column(
+        String(255),
+        nullable=True,
+    )
+
     phone: Mapped[str] = mapped_column(
         String(30),
         nullable=False,
     )
 
+
+    city: Mapped[str] = mapped_column(
+        String(100),
+        nullable=True,
+        default="Colombo",
+    )
+    
     delivery_address: Mapped[str] = mapped_column(
         Text,
         nullable=False,
@@ -58,12 +71,24 @@ class Order(Base):
         nullable=False,
         default="PENDING",
     )
-
+    
     order_status: Mapped[str] = mapped_column(
         String(30),
         nullable=False,
         default="PENDING",
     )
+    
+    payment_id: Mapped[str | None] = mapped_column(
+        String(100),
+        nullable=True,
+    )
+
+    inventory_released: Mapped[bool] = mapped_column(
+        Boolean,
+        default=False,
+        nullable=False,
+    )
+
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),

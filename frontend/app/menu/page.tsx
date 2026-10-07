@@ -70,7 +70,7 @@ export default function MenuPage() {
             search,
             category_id:
               selectedCategory ?? undefined,
-            available_only: false,
+            available_only: true,
           });
 
           setProducts(data);

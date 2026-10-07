@@ -105,14 +105,17 @@ def create_product(
         )
 
     product = Product(
-        name=product_data.name,
-        description=product_data.description,
-        price=product_data.price,
-        category_id=product_data.category_id,
-        stock=product_data.stock,
-        image_url=product_data.image_url,
-        is_available=product_data.is_available,
-    )
+    name=product_data.name,
+    description=product_data.description,
+    price=product_data.price,
+    category_id=product_data.category_id,
+    stock=product_data.stock,
+    image_url=product_data.image_url,
+    is_available=(
+        product_data.is_available
+        and product_data.stock > 0
+    ),
+)
 
     db.add(product)
     db.commit()
@@ -157,6 +160,12 @@ def update_product(
 
     for field, value in update_data.items():
         setattr(product, field, value)
+
+    # Inventory/business rule:
+    # a product with zero stock cannot be available.
+    if product.stock <= 0:
+        product.stock = 0
+        product.is_available = False
 
     db.commit()
     db.refresh(product)

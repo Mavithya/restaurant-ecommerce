@@ -95,15 +95,25 @@ def create_order(
 
     total_amount = subtotal + DELIVERY_FEE
 
+
+    payment_status = (
+        "NOT_REQUIRED"
+        if order_data.payment_method == "WHATSAPP"
+        else "PENDING"
+    )
+
     # Create order.
     order = Order(
         customer_name=order_data.customer_name.strip(),
+        email=str(order_data.email).lower().strip(),
         phone=order_data.phone.strip(),
+        city=order_data.city.strip(),
         delivery_address=order_data.delivery_address.strip(),
         total_amount=total_amount,
         payment_method=order_data.payment_method,
-        payment_status="PENDING",
+        payment_status=payment_status,
         order_status="PENDING",
+        inventory_released=False,
     )
 
     db.add(order)

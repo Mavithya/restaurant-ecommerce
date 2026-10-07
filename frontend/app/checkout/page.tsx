@@ -1,5 +1,9 @@
 "use client";
 
+
+import { createOrder, createPayHerePayment, getWhatsAppOrderLink } from "@/lib/api";
+import { redirectToPayHere } from "@/lib/payhere";
+
 import {
   FormEvent,
   useState,
@@ -17,9 +21,6 @@ import {
   useCart,
 } from "@/components/cart/CartContext";
 
-import {
-  createOrder,
-} from "@/lib/api";
 
 
 type PaymentMethod =
@@ -41,6 +42,12 @@ export default function CheckoutPage() {
   const [name, setName] =
     useState("");
 
+  const [email, setEmail] =
+    useState("");
+
+  const [city, setCity] =
+    useState("Colombo");
+
   const [phone, setPhone] =
     useState("");
 
@@ -55,6 +62,7 @@ export default function CheckoutPage() {
 
   const [error, setError] =
     useState("");
+
 
 
   const deliveryFee =
@@ -86,30 +94,44 @@ export default function CheckoutPage() {
 
 
     try {
-      const order =
-        await createOrder({
-          customer_name: name.trim(),
-          phone: phone.trim(),
-          delivery_address:
-            address.trim(),
-          payment_method: method,
-
-          items: items.map(
-            (item) => ({
-              product_id:
-                item.product.id,
-              quantity:
-                item.quantity,
-            })
-          ),
-        });
 
 
-      clearCart();
+      const order = await createOrder({
+        customer_name: name,
+        email: email,
+        phone: phone,
+        city: city,
+        delivery_address: address,
+        payment_method: method,
+        items: items.map((item) => ({
+          product_id: item.product.id,
+          quantity: item.quantity,
+        })),
+      });
 
+      // PayHere payment
+      if (method === "PAYHERE") {
+        const nameParts = name.trim().split(/\s+/);
 
-      window.location.href =
-        `/order-success?orderId=${order.id}`;
+        const payment =
+          await createPayHerePayment(order.id);
+
+        redirectToPayHere(payment);
+        return;
+
+      }
+
+      if (method === "WHATSAPP") {
+        const whatsapp =
+          await getWhatsAppOrderLink(order.id);
+
+        clearCart();
+
+        window.location.href =
+          whatsapp.whatsapp_url;
+
+        return;
+      }
     } catch (err) {
       setError(
         err instanceof Error
@@ -218,6 +240,26 @@ export default function CheckoutPage() {
                   />
                 </div>
 
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em]"
+                  >
+                    Email
+                  </label>
+
+                  <input
+                    id="email"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) =>
+                      setEmail(e.target.value)
+                    }
+                    className="h-12 w-full border border-(--line) bg-(--surface) px-4 text-sm outline-none focus:ring-1 focus:ring-(--foreground)"
+                    placeholder="you@example.com"
+                  />
+                </div>
 
                 <div>
                   <label
@@ -242,6 +284,26 @@ export default function CheckoutPage() {
                   />
                 </div>
 
+                <div>
+                  <label
+                    htmlFor="city"
+                    className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em]"
+                  >
+                    City
+                  </label>
+
+                  <input
+                    id="city"
+                    required
+                    minLength={2}
+                    value={city}
+                    onChange={(e) =>
+                      setCity(e.target.value)
+                    }
+                    className="h-12 w-full border border-(--line) bg-(--surface) px-4 text-sm outline-none focus:ring-1 focus:ring-(--foreground)"
+                    placeholder="Colombo"
+                  />
+                </div>
 
                 <div>
                   <label
@@ -280,22 +342,20 @@ export default function CheckoutPage() {
                       onClick={() =>
                         setMethod("PAYHERE")
                       }
-                      className={`border p-5 text-left transition-colors ${
-                        method === "PAYHERE"
-                          ? "border-(--foreground) bg-(--foreground) text-white"
-                          : "border-(--line) bg-(--surface)"
-                      }`}
+                      className={`border p-5 text-left transition-colors ${method === "PAYHERE"
+                        ? "border-(--foreground) bg-(--foreground) text-white"
+                        : "border-(--line) bg-(--surface)"
+                        }`}
                     >
                       <div className="text-sm font-semibold">
                         PayHere
                       </div>
 
                       <div
-                        className={`mt-2 text-xs leading-5 ${
-                          method === "PAYHERE"
-                            ? "text-white/70"
-                            : "text-(--muted)"
-                        }`}
+                        className={`mt-2 text-xs leading-5 ${method === "PAYHERE"
+                          ? "text-white/70"
+                          : "text-(--muted)"
+                          }`}
                       >
                         Pay online using
                         PayHere Sandbox.
@@ -308,22 +368,20 @@ export default function CheckoutPage() {
                       onClick={() =>
                         setMethod("WHATSAPP")
                       }
-                      className={`border p-5 text-left transition-colors ${
-                        method === "WHATSAPP"
-                          ? "border-(--foreground) bg-(--foreground) text-white"
-                          : "border-(--line) bg-(--surface)"
-                      }`}
+                      className={`border p-5 text-left transition-colors ${method === "WHATSAPP"
+                        ? "border-(--foreground) bg-(--foreground) text-white"
+                        : "border-(--line) bg-(--surface)"
+                        }`}
                     >
                       <div className="text-sm font-semibold">
                         WhatsApp
                       </div>
 
                       <div
-                        className={`mt-2 text-xs leading-5 ${
-                          method === "WHATSAPP"
-                            ? "text-white/70"
-                            : "text-(--muted)"
-                        }`}
+                        className={`mt-2 text-xs leading-5 ${method === "WHATSAPP"
+                          ? "text-white/70"
+                          : "text-(--muted)"
+                          }`}
                       >
                         Send your complete
                         order directly to us.

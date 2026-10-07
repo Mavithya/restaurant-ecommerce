@@ -3,7 +3,7 @@ from sqlalchemy import text
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 from app.db.database import engine , init_db
-from app.routers import auth,admin,products,categories,orders
+from app.routers import auth,admin,products,categories,orders,payments
 
 app = FastAPI(
     title="Restaurant E-Commerce API",
@@ -30,6 +30,7 @@ app.include_router(admin.router)
 app.include_router(products.router)
 app.include_router(categories.router)
 app.include_router(orders.router)
+app.include_router(payments.router)
 
 
 @app.get("/")

@@ -7,7 +7,19 @@ class Settings(BaseSettings):
     jwt_secret: str
     jwt_algorithm: str = "HS256"
     access_token_expire_minutes: int = 60
+     
+    PAYHERE_MERCHANT_ID: str
+    PAYHERE_MERCHANT_SECRET: str
+    PAYHERE_SANDBOX: bool = True
 
+    FRONTEND_URL: str = "http://localhost:3000"
+    BACKEND_URL: str = "http://localhost:8000"
+
+    WHATSAPP_NUMBER: str = ""
+
+    CLOUDINARY_CLOUD_NAME: str
+    CLOUDINARY_API_KEY: str
+    CLOUDINARY_API_SECRET: str
 
     model_config = SettingsConfigDict(
         env_file=".env",
