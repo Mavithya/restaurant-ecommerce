@@ -81,4 +81,32 @@ export async function getProduct(productId: number) {
 import type {
   Category,
   Product,
+  Order
 } from "@/types";
+
+
+export interface CreateOrderItemPayload {
+  product_id: number;
+  quantity: number;
+}
+
+
+export interface CreateOrderPayload {
+  customer_name: string;
+  phone: string;
+  delivery_address: string;
+  payment_method: "PAYHERE" | "WHATSAPP";
+  items: CreateOrderItemPayload[];
+}
+
+export async function createOrder(
+  payload: CreateOrderPayload
+) {
+  return apiRequest<Order>(
+    "/api/orders",
+    {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }
+  );
+}
