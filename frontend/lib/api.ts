@@ -190,18 +190,21 @@ export async function getWhatsAppOrderLink(
 }
 
 export interface AdminDashboardStats {
-  total_products: number;
-  active_products: number;
+  total_products?: number;
+  product_count?: number;
+  active_products?: number;
+  total_categories?: number;
+  category_count?: number;
+  total_orders?: number;
+  order_count?: number;
+  pending_orders?: number;
+  pending_count?: number;
+  paid_revenue: number | string;
   low_stock_products: {
     id: number;
     name: string;
     stock: number;
   }[];
-  total_categories: number;
-  total_orders: number;
-  pending_orders: number;
-  paid_revenue: number | string;
-  
 }
 
 export interface AdminOrderItem {

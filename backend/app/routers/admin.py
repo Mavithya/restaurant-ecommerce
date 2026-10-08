@@ -74,9 +74,14 @@ def get_dashboard(
     ).all()
 
     return {
+        "total_products": product_count,
         "product_count": product_count,
+        "active_products": product_count,
+        "total_categories": category_count,
         "category_count": category_count,
+        "total_orders": order_count,
         "order_count": order_count,
+        "pending_orders": pending_count,
         "pending_count": pending_count,
         "paid_revenue": float(paid_revenue),
         "low_stock_products": [

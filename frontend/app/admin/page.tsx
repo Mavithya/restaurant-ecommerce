@@ -218,22 +218,22 @@ export default function AdminPage() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <StatCard
               label="PRODUCTS"
-              value={stats?.total_products ?? 0}
+              value={stats?.total_products ?? stats?.product_count ?? 0}
               description="Active menu dishes"
             />
             <StatCard
               label="CATEGORIES"
-              value={stats?.total_categories ?? 0}
+              value={stats?.total_categories ?? stats?.category_count ?? 0}
               description="Menu categories"
             />
             <StatCard
               label="ORDERS"
-              value={stats?.total_orders ?? 0}
+              value={stats?.total_orders ?? stats?.order_count ?? 0}
               description="Total customer orders"
             />
             <StatCard
               label="PENDING"
-              value={stats?.pending_orders ?? 0}
+              value={stats?.pending_orders ?? stats?.pending_count ?? 0}
               description="Orders awaiting prep"
             />
           </div>
