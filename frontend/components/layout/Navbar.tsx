@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Search,
   ShoppingBag,
@@ -11,15 +12,23 @@ import { useAuth } from "@/components/auth/AuthContext";
 
 
 export default function Navbar() {
+  const router = useRouter();
   const { itemCount } = useCart();
   const { user, loading, logout } = useAuth();
+
+  function handleLogout() {
+    logout();
+    router.replace("/login");
+  }
+
+  const isAdmin = user?.role === "ADMIN";
 
   return (
     <header className="sticky top-0 z-50 border-b border-(--line) bg-(--background)/95 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
 
         <Link
-          href="/"
+          href={isAdmin ? "/admin" : "/"}
           className="flex items-center gap-3"
         >
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-(--foreground) text-sm font-bold text-(--background)">
@@ -40,21 +49,21 @@ export default function Navbar() {
 
         <nav className="hidden items-center gap-8 text-sm md:flex">
           <Link
-            href="/"
+            href={isAdmin ? "/admin" : "/"}
             className="transition-opacity hover:opacity-60"
           >
             Home
           </Link>
 
           <Link
-            href="/menu"
+            href={isAdmin ? "/admin" : "/menu"}
             className="transition-opacity hover:opacity-60"
           >
             Menu
           </Link>
 
           <a
-            href="/#story"
+            href={isAdmin ? "/admin" : "/#story"}
             className="transition-opacity hover:opacity-60"
           >
             Our Story
@@ -96,42 +105,42 @@ export default function Navbar() {
         </div>
 
         {!loading && (
-  <>
-    {user ? (
-      <div className="flex items-center gap-2">
+          <>
+            {user ? (
+              <div className="flex items-center gap-2">
 
-        <span className="hidden text-sm md:block">
-          {user.name}
-        </span>
+                <span className="hidden text-sm md:block text-(--muted)">
+                  {user.name}
+                </span>
 
-        {user.role === "ADMIN" && (
-          <Link
-            href="/admin"
-            className="hidden text-xs font-semibold uppercase tracking-[0.12em] md:block"
-          >
-            Admin
-          </Link>
+                {user.role === "ADMIN" && (
+                  <Link
+                    href="/admin"
+                    className="hidden text-xs font-semibold uppercase tracking-[0.12em] md:block text-(--foreground) hover:text-(--accent) transition-colors"
+                  >
+                    ADMIN
+                  </Link>
+                )}
+
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="flex h-10 items-center rounded-full border border-(--line) px-4 text-xs font-semibold transition-colors hover:bg-(--surface) hover:border-(--foreground)"
+                >
+                  Logout
+                </button>
+
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                className="flex h-10 items-center rounded-full border border-(--line) px-4 text-xs font-semibold transition-colors hover:bg-(--surface) hover:border-(--foreground)"
+              >
+                Sign in
+              </Link>
+            )}
+          </>
         )}
-
-        <button
-          type="button"
-          onClick={logout}
-          className="flex h-10 items-center rounded-full border border-(--line) px-4 text-xs font-semibold transition-colors hover:bg-(--surface)"
-        >
-          Logout
-        </button>
-
-      </div>
-    ) : (
-      <Link
-        href="/login"
-        className="flex h-10 items-center rounded-full border border-(--line) px-4 text-xs font-semibold transition-colors hover:bg-(--surface)"
-      >
-        Sign in
-      </Link>
-    )}
-  </>
-)}
       </div>
       
     </header>

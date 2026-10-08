@@ -4,11 +4,8 @@
 import { createOrder, createPayHerePayment, getWhatsAppOrderLink } from "@/lib/api";
 import { redirectToPayHere } from "@/lib/payhere";
 
-import {
-  FormEvent,
-  useState,
-} from "react";
-
+import { useEffect, FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -16,11 +13,8 @@ import {
 } from "lucide-react";
 
 import Navbar from "@/components/layout/Navbar";
-
-import {
-  useCart,
-} from "@/components/cart/CartContext";
-
+import { useCart } from "@/components/cart/CartContext";
+import { useAuth } from "@/components/auth/AuthContext";
 
 
 type PaymentMethod =
@@ -32,6 +26,15 @@ const DELIVERY_FEE = 300;
 
 
 export default function CheckoutPage() {
+  const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
+
+  useEffect(() => {
+    if (!authLoading && user?.role === "ADMIN") {
+      router.replace("/admin");
+    }
+  }, [user, authLoading, router]);
+
   const {
     items,
     subtotal,

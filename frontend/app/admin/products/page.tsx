@@ -73,7 +73,13 @@ export default function AdminProductsPage() {
     const {
         user,
         loading: authLoading,
+        logout,
     } = useAuth();
+
+    function handleLogout() {
+        logout();
+        router.replace("/login");
+    }
 
 
     const [
@@ -626,23 +632,35 @@ export default function AdminProductsPage() {
 
             <div className="mx-auto max-w-7xl">
 
-                {/* Header */}
+                {/* Top bar with back link and top-right user status + logout */}
+                <div className="flex items-center justify-between border-b border-(--line) pb-4 mb-6">
+                    <button
+                        type="button"
+                        onClick={() => router.push("/admin")}
+                        className="text-xs font-semibold uppercase tracking-[0.14em] text-(--muted) hover:text-(--foreground)"
+                    >
+                        ← Admin Dashboard
+                    </button>
 
-                <div className="flex flex-col gap-5 border-b border-(--line) pb-8 md:flex-row md:items-end md:justify-between">
-
-                    <div>
+                    <div className="flex items-center gap-3">
+                        <div className="text-xs text-(--muted) border border-(--line) bg-(--surface) px-3.5 py-1.5 rounded-full">
+                            Signed in as <span className="font-semibold text-(--foreground)">{user?.name || "admin"}</span>
+                        </div>
 
                         <button
                             type="button"
-                            onClick={() =>
-                                router.push("/admin")
-                            }
-                            className="text-xs font-semibold uppercase tracking-[0.14em] text-(--muted) hover:text-(--foreground)"
+                            onClick={handleLogout}
+                            className="rounded-full border border-(--line) bg-(--surface) px-3.5 py-1.5 text-xs font-semibold text-(--foreground) transition-all hover:border-(--foreground) hover:bg-(--foreground) hover:text-white"
                         >
-                            ← Admin Dashboard
+                            Logout
                         </button>
+                    </div>
+                </div>
 
-                        <p className="mt-6 text-xs uppercase tracking-[0.22em] text-(--muted)">
+                {/* Title and Add Product button */}
+                <div className="flex flex-col gap-5 border-b border-(--line) pb-8 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                        <p className="text-xs uppercase tracking-[0.22em] text-(--muted)">
                             Inventory
                         </p>
 
@@ -653,18 +671,15 @@ export default function AdminProductsPage() {
                         <p className="mt-2 text-sm text-(--muted)">
                             Manage your restaurant menu and stock.
                         </p>
-
                     </div>
-
 
                     <button
                         type="button"
                         onClick={openCreateForm}
-                        className="h-11 bg-(--foreground) px-5 text-sm font-semibold text-(--background) transition-opacity hover:opacity-90"
+                        className="h-11 bg-(--foreground) px-6 text-xs font-semibold uppercase tracking-[0.14em] text-(--background) rounded-full hover:opacity-90 transition-opacity self-start sm:self-auto"
                     >
                         + Add Product
                     </button>
-
                 </div>
 
 
