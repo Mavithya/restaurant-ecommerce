@@ -12,8 +12,8 @@ class Settings(BaseSettings):
     PAYHERE_MERCHANT_SECRET: str
     PAYHERE_SANDBOX: bool = True
 
-    FRONTEND_URL: str = "http://localhost:3000"
-    BACKEND_URL: str = "http://localhost:8000"
+    FRONTEND_URL: str 
+    BACKEND_URL: str 
 
     WHATSAPP_NUMBER: str = ""
 

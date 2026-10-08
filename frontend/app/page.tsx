@@ -3,28 +3,41 @@ import {
   ArrowUpRight,
   Clock3,
   MapPin,
+  Sparkles,
+  Flame,
+  ChefHat,
+  CheckCircle2,
 } from "lucide-react";
 
 import Navbar from "@/components/layout/Navbar";
 
+const HERO_IMAGE_URL =
+  "https://res.cloudinary.com/ju3rkjsd/image/upload/v1791466417/kora/hero/hero_table_spread.jpg";
+
+const STORY_IMAGE_URL =
+  "https://res.cloudinary.com/ju3rkjsd/image/upload/v1791467004/kora/story/story_kitchen_cooking.jpg";
+
 const dishes = [
   {
     name: "Chicken Fried Rice",
-    price: "Rs. 950",
+    price: "Rs. 1,650",
     note: "Wok-tossed · hearty · fresh",
-    symbol: "🍚",
+    image_url:
+      "https://res.cloudinary.com/ju3rkjsd/image/upload/v1791465484/kora/products/seed_chicken_fried_rice.jpg",
   },
   {
-    name: "Chicken Burger",
-    price: "Rs. 1,100",
-    note: "Crispy · creamy · satisfying",
-    symbol: "🍔",
+    name: "Cheese Chicken Kottu",
+    price: "Rs. 1,850",
+    note: "Wok-fried · cheesy · spicy",
+    image_url:
+      "https://res.cloudinary.com/ju3rkjsd/image/upload/v1791465488/kora/products/seed_cheese_chicken_kottu.jpg",
   },
   {
-    name: "Chocolate Cake",
-    price: "Rs. 650",
-    note: "Rich · soft · baked today",
-    symbol: "🍰",
+    name: "Butter Chicken Masala",
+    price: "Rs. 1,750",
+    note: "Creamy · rich · aromatic",
+    image_url:
+      "https://res.cloudinary.com/ju3rkjsd/image/upload/v1791465489/kora/products/seed_butter_chicken.jpg",
   },
 ];
 
@@ -82,21 +95,25 @@ export default function Home() {
           {/* Visual block */}
           <div className="mt-12 lg:mt-0 lg:pl-12">
 
-            <div className="relative aspect-4/5 overflow-hidden bg-[#ddd3c2]">
+            <div className="relative aspect-4/5 overflow-hidden border border-(--line) bg-[#ddd3c2]">
 
-              <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-8">
+              <img
+                src={HERO_IMAGE_URL}
+                alt="KORA Table Spread"
+                className="h-full w-full object-cover"
+              />
 
-                <div className="flex justify-between text-xs uppercase tracking-[0.18em]">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/20" />
+
+              <div className="absolute inset-0 flex flex-col justify-between p-6 text-white sm:p-8">
+
+                <div className="flex justify-between text-xs font-semibold uppercase tracking-[0.18em] text-white/90">
                   <span>KORA / 01</span>
                   <span>Daily table</span>
                 </div>
 
                 <div>
-                  <div className="mb-5 text-7xl sm:text-8xl">
-                    🍛
-                  </div>
-
-                  <p className="max-w-xs font-serif text-4xl leading-tight sm:text-5xl">
+                  <p className="max-w-xs font-serif text-4xl leading-tight text-white sm:text-5xl">
                     Made for the table,
                     not the feed.
                   </p>
@@ -104,7 +121,7 @@ export default function Home() {
 
               </div>
 
-              <div className="absolute bottom-6 right-6 flex h-16 w-16 items-center justify-center rounded-full bg-(--foreground) text-xs font-semibold uppercase tracking-widest text-white">
+              <div className="absolute bottom-6 right-6 flex h-16 w-16 items-center justify-center rounded-full bg-white text-xs font-bold uppercase tracking-widest text-(--foreground) shadow-lg">
                 Eat
               </div>
 
@@ -185,23 +202,31 @@ export default function Home() {
 
 
           <div className="grid gap-5 md:grid-cols-3">
-            {dishes.map((dish, index) => (
+            {dishes.map((dish) => (
               <Link
                 href="/menu"
                 key={dish.name}
                 className="group border border-(--line) bg-(--surface)"
               >
-                <div className="flex aspect-5/4 items-center justify-center bg-[#e9e2d6] text-8xl transition-transform duration-500 group-hover:scale-[1.01]">
-                  {dish.symbol}
+                <div className="relative aspect-5/4 overflow-hidden bg-[#e9e2d6]">
+                  <img
+                    src={dish.image_url}
+                    alt={dish.name}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+
+                  <div className="absolute bottom-4 right-4 flex h-9 w-9 items-center justify-center rounded-full bg-white opacity-0 shadow-sm transition-all duration-300 group-hover:opacity-100">
+                    <ArrowUpRight size={16} />
+                  </div>
                 </div>
 
                 <div className="p-5">
                   <div className="mb-2 flex justify-between gap-4">
-                    <h3 className="font-semibold">
+                    <h3 className="font-semibold tracking-tight">
                       {dish.name}
                     </h3>
 
-                    <span className="text-sm">
+                    <span className="whitespace-nowrap text-sm font-medium">
                       {dish.price}
                     </span>
                   </div>
@@ -220,28 +245,100 @@ export default function Home() {
         {/* Story */}
         <section
           id="story"
-          className="border-t border-(--line)"
+          className="border-t border-(--line) bg-(--surface)"
         >
-          <div className="mx-auto grid max-w-7xl px-5 py-16 lg:grid-cols-[0.75fr_1.25fr] lg:px-8 lg:py-24">
+          <div className="mx-auto grid max-w-7xl px-5 py-16 lg:grid-cols-[1fr_1.1fr] lg:gap-16 lg:px-8 lg:py-24 items-center">
 
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-(--accent)">
-              Our story
-            </p>
+            {/* Left Image Showcase */}
+            <div className="relative">
+              <div className="relative aspect-4/3 overflow-hidden border border-(--line) bg-[#ddd3c2] sm:aspect-square">
+                <img
+                  src={STORY_IMAGE_URL}
+                  alt="KORA Chef preparing dish"
+                  className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-            <div className="mt-7 lg:mt-0">
-              <h2 className="max-w-3xl font-serif text-4xl leading-tight tracking-tight sm:text-5xl">
-                A small kitchen with a
-                big respect for good
-                ingredients.
+                <div className="absolute bottom-6 left-6 right-6 text-white">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-300">
+                    Est. 2026 · Colombo
+                  </p>
+                  <p className="mt-1 font-serif text-2xl">
+                    Crafted with pride & precision
+                  </p>
+                </div>
+              </div>
+
+              {/* Quality Badge */}
+              <div className="absolute -bottom-6 -right-6 hidden sm:flex items-center gap-3 border border-(--line) bg-(--background) p-4 shadow-xl">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-(--accent) text-white">
+                  <Sparkles size={20} />
+                </div>
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-wider">100% Fresh</div>
+                  <div className="text-[11px] text-(--muted)">Cooked to order</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Content */}
+            <div className="mt-12 flex flex-col justify-center lg:mt-0">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-(--accent)">
+                Our Story
+              </p>
+
+              <h2 className="mt-3 font-serif text-4xl leading-tight tracking-tight sm:text-5xl">
+                A small kitchen with a big respect for good ingredients.
               </h2>
 
-              <p className="mt-7 max-w-2xl text-sm leading-8 text-(--muted)">
-                KORA is built around a simple idea:
-                make food you'd happily order twice.
-                We keep the menu focused, prepare
-                things fresh and let the ingredients
-                do most of the talking.
+              <p className="mt-6 text-sm leading-8 text-(--muted) sm:text-base">
+                KORA is built around a simple idea: make food you'd happily order twice.
+                We keep the menu focused, prepare everything fresh daily, and let honest
+                flavours do the talking.
               </p>
+
+              {/* Value Pillars */}
+              <div className="mt-10 grid gap-4 sm:grid-cols-3 border-t border-(--line) pt-8">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider">
+                    <CheckCircle2 size={15} className="text-(--accent)" />
+                    Fresh Daily
+                  </div>
+                  <p className="text-xs text-(--muted) leading-5">
+                    Sourced locally every morning.
+                  </p>
+                </div>
+
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider">
+                    <Flame size={15} className="text-(--accent)" />
+                    Authentic
+                  </div>
+                  <p className="text-xs text-(--muted) leading-5">
+                    Traditional recipes & spices.
+                  </p>
+                </div>
+
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider">
+                    <ChefHat size={15} className="text-(--accent)" />
+                    Zero Shortcuts
+                  </div>
+                  <p className="text-xs text-(--muted) leading-5">
+                    No artificial preservatives.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-9">
+                <Link
+                  href="/menu"
+                  className="inline-flex items-center gap-3 bg-(--foreground) px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
+                >
+                  Explore Our Menu
+                  <ArrowUpRight size={16} />
+                </Link>
+              </div>
             </div>
 
           </div>
