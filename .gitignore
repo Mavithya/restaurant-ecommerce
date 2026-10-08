@@ -7,8 +7,6 @@ frontend/.next/
 frontend/out/
 
 # Environment variables
-.env
-.env.local
 frontend/.env.local
 backend/.env
 
@@ -18,7 +16,6 @@ __pycache__/
 .pytest_cache/
 
 # IDE
-.vscode/
 .idea/
 
 # OS
@@ -32,3 +29,5 @@ Thumbs.db
 pass.txt
 *.txt
 notes.txt
+config.bat
+node_modules
