@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -8,15 +10,23 @@ import {
 
 import Navbar from "@/components/layout/Navbar";
 import CartItem from "@/components/cart/CartItem";
-import {
-  useCart,
-} from "@/components/cart/CartContext";
+import { useCart } from "@/components/cart/CartContext";
+import { useAuth } from "@/components/auth/AuthContext";
 
 
 const DELIVERY_FEE = 300;
 
 
 export default function CartPage() {
+  const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
+
+  useEffect(() => {
+    if (!authLoading && user?.role === "ADMIN") {
+      router.replace("/admin");
+    }
+  }, [user, authLoading, router]);
+
   const {
     items,
     itemCount,

@@ -3,13 +3,23 @@
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Check, Minus, Plus, ShoppingBag } from "lucide-react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import { useCart } from "@/components/cart/CartContext";
+import { useAuth } from "@/components/auth/AuthContext";
 import { getProduct } from "@/lib/api";
 import type { Product } from "@/types";
 
 function ProductDetailContent() {
+  const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
+
+  useEffect(() => {
+    if (!authLoading && user?.role === "ADMIN") {
+      router.replace("/admin");
+    }
+  }, [user, authLoading, router]);
+
   const params = useParams<{ id: string }>();
   const productId = Number(params.id);
 

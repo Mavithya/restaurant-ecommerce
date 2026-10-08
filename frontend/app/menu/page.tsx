@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Search,
   SlidersHorizontal,
@@ -9,6 +10,7 @@ import {
 import Navbar from "@/components/layout/Navbar";
 import ProductCard from "@/components/products/ProductCard";
 import CategoryFilter from "@/components/products/CategoryFilter";
+import { useAuth } from "@/components/auth/AuthContext";
 
 import {
   getCategories,
@@ -22,6 +24,15 @@ import type {
 
 
 export default function MenuPage() {
+  const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
+
+  useEffect(() => {
+    if (!authLoading && user?.role === "ADMIN") {
+      router.replace("/admin");
+    }
+  }, [user, authLoading, router]);
+
   const [products, setProducts] = useState<
     Product[]
   >([]);

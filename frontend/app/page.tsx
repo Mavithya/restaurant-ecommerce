@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   ArrowUpRight,
@@ -10,6 +14,7 @@ import {
 } from "lucide-react";
 
 import Navbar from "@/components/layout/Navbar";
+import { useAuth } from "@/components/auth/AuthContext";
 
 const HERO_IMAGE_URL =
   "https://res.cloudinary.com/ju3rkjsd/image/upload/v1791466417/kora/hero/hero_table_spread.jpg";
@@ -43,6 +48,19 @@ const dishes = [
 
 
 export default function Home() {
+  const router = useRouter();
+  const { user, loading } = useAuth();
+
+  useEffect(() => {
+    if (!loading && user?.role === "ADMIN") {
+      router.replace("/admin");
+    }
+  }, [user, loading, router]);
+
+  if (!loading && user?.role === "ADMIN") {
+    return null;
+  }
+
   return (
     <div className="min-h-screen">
       <Navbar />

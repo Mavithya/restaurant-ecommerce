@@ -26,7 +26,13 @@ export default function AdminCategoriesPage() {
   const {
     user,
     loading: authLoading,
+    logout,
   } = useAuth();
+
+  function handleLogout() {
+    logout();
+    router.replace("/login");
+  }
 
   const [categories, setCategories] =
     useState<Category[]>([]);
@@ -276,20 +282,35 @@ export default function AdminCategoriesPage() {
     <main className="min-h-screen bg-(--background) px-5 py-10 lg:px-8">
       <div className="mx-auto max-w-5xl">
 
-        <div className="flex flex-col gap-5 border-b border-(--line) pb-8 sm:flex-row sm:items-end sm:justify-between">
+        {/* Top bar with back link and top-right user status + logout */}
+        <div className="flex items-center justify-between border-b border-(--line) pb-4 mb-6">
+          <button
+            type="button"
+            onClick={() => router.push("/admin")}
+            className="text-xs font-semibold uppercase tracking-[0.14em] text-(--muted) hover:text-(--foreground)"
+          >
+            ← Admin Dashboard
+          </button>
 
-          <div>
+          <div className="flex items-center gap-3">
+            <div className="text-xs text-(--muted) border border-(--line) bg-(--surface) px-3.5 py-1.5 rounded-full">
+              Signed in as <span className="font-semibold text-(--foreground)">{user?.name || "admin"}</span>
+            </div>
+
             <button
               type="button"
-              onClick={() =>
-                router.push("/admin")
-              }
-              className="text-xs font-semibold uppercase tracking-[0.14em] text-(--muted)"
+              onClick={handleLogout}
+              className="rounded-full border border-(--line) bg-(--surface) px-3.5 py-1.5 text-xs font-semibold text-(--foreground) transition-all hover:border-(--foreground) hover:bg-(--foreground) hover:text-white"
             >
-              ← Admin Dashboard
+              Logout
             </button>
+          </div>
+        </div>
 
-            <p className="mt-6 text-xs uppercase tracking-[0.22em] text-(--muted)">
+        {/* Title and Add Category button */}
+        <div className="flex flex-col gap-5 border-b border-(--line) pb-8 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-xs uppercase tracking-[0.22em] text-(--muted)">
               Menu Structure
             </p>
 
@@ -305,11 +326,10 @@ export default function AdminCategoriesPage() {
           <button
             type="button"
             onClick={openCreate}
-            className="h-11 bg-(--foreground) px-5 text-sm font-semibold text-(--background)"
+            className="h-11 bg-(--foreground) px-6 text-xs font-semibold uppercase tracking-[0.14em] text-(--background) rounded-full hover:opacity-90 transition-opacity self-start sm:self-auto"
           >
             + Add Category
           </button>
-
         </div>
 
 
